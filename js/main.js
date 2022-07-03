@@ -1,140 +1,121 @@
-const createSlider = () => {
-    let count = 0;
-    for (const slider of document.querySelectorAll('.slider')) {
+import { Cart } from './cart.js';
+import { validate } from './validate.js'
 
-        if (!slider) { return; }
+const cart = new Cart();
+const cartList = document.querySelector('.cart-items__list');
 
-        const wrapper = document.createElement('div');
-        const ul = document.createElement('ul');
-        const ol = document.createElement('ol');
+const createCartItem = (item) => {
 
+    let li = document.querySelector(`[data-item-id="${item.id}"]`);
 
-        wrapper.className = 'slider__wrapper';
-        ul.className = 'slider__items';
-        ol.className = 'slider__indicators';
-        ul.dataset.id = count;
-        ol.dataset.id = count++;
+    if (!li) {
+        li = document.createElement('li');
+        li.className = 'cart-item';
+        li.dataset.itemId = item.id;
+        cartList.append(li);
+    }
 
+    const oldPrice = item.oldPrice ? item.oldPrice + '₽' : '';
 
+   
+    li.innerHTML = `
+        <div class="cart-item__left">
+            <h3 class="cart-item__title">${item.title}</h3>
+            <p class="cart-item__id">id: ${item.id}</p>
+        </div>
+        <div class="cart-item__right">
+            <p class="cart-item__amount">
+                 ${item.count} 
+            </p>
+            <p class="cart-item__price">
+                <span class="cart-item__old-price"> ${oldPrice} </span>
+                <span class="price"> ${item.price} ₽ </span>
+            </p>
+            <button class="cart-item__remove">
+                <svg class="itemSvg" width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 2C4.682 2 2 4.682 2 8C2 11.318 4.682 14 8 14C11.318 14 14 11.318 14 8C14 4.682 11.318 2 8 2ZM8 12.8C5.354 12.8 3.2 10.646 3.2 8C3.2 5.354 5.354 3.2 8 3.2C10.646 3.2 12.8 5.354 12.8 8C12.8 10.646 10.646 12.8 8 12.8ZM10.154 5L8 7.154L5.846 5L5 5.846L7.154 8L5 10.154L5.846 11L8 8.846L10.154 11L11 10.154L8.846 8L11 5.846L10.154 5Z" fill="#B0B0B0"/>
+                </svg>
+            </button>
+        </div>
+    `;
+    
+}
 
+const updatePrecheck = () => {
+    const precheck = document.querySelector('.products__precheck');
+    const count = cart.getCountAll();
+    const price = cart.getSum();
+    const discount = cart.getDiscount();
+    const priceNotDiscount = price + discount;
 
-        let ind = 1;
+    console.log(price, discount);
 
-        while (slider.children.length) {
-            const item = document.createElement('li');
-            const li = document.createElement('li');
+    precheck.innerHTML = `
+        <h1 class="precheck__title">Ваши товары</h1>
+        <div class="precheck__row">
+            <p class="precheck__amount">Товары (${count}) </p>
+            <p class="precheck__price"> ${priceNotDiscount} ₽ </p>
+        </div>
+        <div class="precheck__row">
+            <p class="">Скидка</p>
+            <p class="precheck__discount"> - ${discount} ₽ </p>
+        </div>
+        <div class="precheck__summary">
+            <h2 class="precheck__summary-title">Итого:</h2>
+            <div class="precheck__row">
+                <p class="">Сумма</p>
+                <h2 class="precheck__summary-discount"> ${price} ₽</h2>
+            </div>
+        </div>
+    `;
+}
 
-            item.className = 'slider__item';
-            li.className = 'slider__indicator';
+const checkLocalCart = () => {
+    const data = cart.getData();
 
-            if (ind == 1) {
-                item.classList.add('slider__item--active');
-                li.classList.add('slider__indicator--active')
-            }
-
-            item.dataset.ind = li.dataset.toInd = ind++;
-
-            item.append(slider.children[0]);
-            ul.append(item);
-            ol.append(li);
-
-            li.addEventListener('click', moveTo);
-        }
-
-        if (slider.classList.contains('slider--b')) {
-            const btnWrapper = document.createElement('div');
-            const btnPrev = document.createElement('button');
-            const btnNext = document.createElement('button');
-            btnWrapper.className = 'slider__buttons';
-            btnPrev.className = 'slider__btn-prev slider__btn';
-            btnNext.className = 'slider__btn-next slider__btn';
-            [btnPrev, btnNext].forEach(btn => {
-                btn.addEventListener('click', move);
-                btnWrapper.append(btn);
-            });
-
-            slider.append(btnWrapper);
-        }
-
-        wrapper.append(ul);
-        slider.append(wrapper);
-        slider.append(ol);
-        console.log(slider);
+    if (data.length > 0) {
+        data.forEach(item => createCartItem(item));
+    } else {
+        document.querySelector('.cart-block__message').classList.toggle('disable');
     }
 }
 
-const move = (e) => {
-    e.preventDefault();
-    const slider = e.target.parentElement.parentElement;
-    const items = slider.querySelector('.slider__items');
-    const direction = e.target.classList.contains('slider__btn-next') ? 1 : -1;
-    const currentSlide = slider.querySelector('.slider__item--active');
-    const index = parseInt(currentSlide.dataset.ind, 10);
 
-    if (index + direction == 0 || index + direction > items.children.length) { return ;}
 
-    const currentIndicator = slider.querySelector(`[data-to-ind="${index}"]`);
-    const nextIndicator = slider.querySelector(`[data-to-ind="${index + direction}"]`);
+const addCartItem = (event) => {
+    event.preventDefault();
+    const id = document.querySelector('#input-id');
+    const title = document.querySelector('#input-title');
+    const price = document.querySelector('#input-price');
 
-    const nextSlide = slider.querySelector(`[data-ind="${index + direction}"]`);
+    let errors = validate.test([[id, 'num'], [title, 'textnum'], [price, 'num']]);
 
-    nextSlide.classList.add('slider__item--active');
-    nextIndicator.classList.add('slider__indicator--active');
+    if (errors.length != 0) {
+        errors.forEach(error => document.querySelector('.error-product').append(error));
+        return;
+    }
 
-    currentSlide.classList.remove('slider__item--active');
-    currentIndicator.classList.remove('slider__indicator--active');
+    cart.add({
+        "id": id.value,
+        "title": title.value,
+        "price": price.value,
+        "count": 1
+    });
     
-    const h = (direction) * (-100);
-    const currentX = parseInt(items.dataset.translate, 10) || 0;
+    createCartItem(cart.getById(id.value));
 
-    items.style.transform = `translateX(${h + currentX}%)`;
-    items.dataset.translate = h + currentX;
-   
-}
-
-const moveTo = (e) => {
-    e.preventDefault();
-    const id = e.target.parentElement.dataset.id;
-    const index = parseInt(e.target.dataset.toInd, 10);
-    const slider = document.querySelector(`[data-id="${id}"]`);
-    
-    const currentSlide = slider.querySelector('.slider__item--active');
-    const currentIndex = currentSlide.dataset.ind;
-
-    if (index == currentIndex) { return; }
-
-    const nextIndicator = e.target;
-    const currentIndicator = nextIndicator.parentElement.querySelector(`[data-to-ind="${currentIndex}"]`);
-    
-    const nextSlide = slider.querySelector(`[data-ind="${index}"]`);
-
-    nextSlide.classList.add('slider__item--active');
-    nextIndicator.classList.add('slider__indicator--active');
-
-    currentSlide.classList.remove('slider__item--active');
-    currentIndicator.classList.remove('slider__indicator--active');
-
-    const h = (index - currentIndex) * (-100);
-    const currentX = parseInt(slider.dataset.translate, 10) || 0;
-
-    slider.style.transform = `translateX(${h + currentX}%)`;
-    slider.dataset.translate = h + currentX;
-
-}
-
-const setTabs = () => {
-    const tabs = document.querySelectorAll('.tabs__item');
-    tabs.forEach(tab =>
-        tab.addEventListener('click', (event) => {
-            const blockTab = document.querySelector(event.target.dataset.link);
-            document.querySelector('.tabs__block--active').classList.toggle('tabs__block--active');
-            document.querySelector('.tabs__item--active').classList.toggle('tabs__item--active');
-            blockTab.classList.toggle('tabs__block--active');
-            tab.classList.toggle('tabs__item--active');
-        })
-    );
+    [id, title, price].forEach(input => input.value = '');
+    document.querySelector('.cart-block__message').classList.remove('disable');
 }
 
 
-createSlider();
-setTabs();
+// cart.setDiscount(10)
+
+checkLocalCart();
+updatePrecheck();
+validate.setEvent(document.querySelectorAll('.form__item-input'));
+document.querySelector('.form-product__add').addEventListener('click', addCartItem)
+
+
+
+
