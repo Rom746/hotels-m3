@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="Keywords" content="">
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Корзина</title>
+</head>
+
+<body>
+    
+    <main>
+        <div class="container">
+            <section class="products">
+                <div class="products__main">
+                    <div class="products__cart-block">
+                        <div class="cart-block__header">
+                            <h1 class="cart-block__title">Товары</h1>
+                        </div>
+                        <div class="cart-block__cart-items">
+                            <ul class="cart-items__list">
+                                <li class="cart-item">
+                                    <div class="cart-item__left">
+                                        <h3 class="cart-item__title">Title</h3>
+                                        <p class="cart-item__id">id: 262638</p>
+                                    </div>
+                                    <div class="cart-item__right">
+                                        <p class="cart-item__price">
+                                            <span class="price"> 4 999 ₽ </span>
+                                        </p>
+                                        <button class="cart-item__remove">
+                                            <svg class="itemSvg" width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M8 2C4.682 2 2 4.682 2 8C2 11.318 4.682 14 8 14C11.318 14 14 11.318 14 8C14 4.682 11.318 2 8 2ZM8 12.8C5.354 12.8 3.2 10.646 3.2 8C3.2 5.354 5.354 3.2 8 3.2C10.646 3.2 12.8 5.354 12.8 8C12.8 10.646 10.646 12.8 8 12.8ZM10.154 5L8 7.154L5.846 5L5 5.846L7.154 8L5 10.154L5.846 11L8 8.846L10.154 11L11 10.154L8.846 8L11 5.846L10.154 5Z" fill="#B0B0B0"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </li> 
+                                <li class="cart-item">
+                                    <div class="cart-item__left">
+                                        <h3 class="cart-item__title">Titlewefwefwefwefwefwe fwefwefwfefd</h3>
+                                        <p class="cart-item__id">id: 262638</p>
+                                    </div>
+                                    <div class="cart-item__right">
+                                        <p class="cart-item__price">
+                                            <span class="cart-item__old-price"> 6 999 ₽ </span>
+                                            <span class="price"> 4 999 ₽ </span>
+                                        </p>
+                                        <button class="cart-item__remove">
+                                            <svg class="itemSvg" width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M8 2C4.682 2 2 4.682 2 8C2 11.318 4.682 14 8 14C11.318 14 14 11.318 14 8C14 4.682 11.318 2 8 2ZM8 12.8C5.354 12.8 3.2 10.646 3.2 8C3.2 5.354 5.354 3.2 8 3.2C10.646 3.2 12.8 5.354 12.8 8C12.8 10.646 10.646 12.8 8 12.8ZM10.154 5L8 7.154L5.846 5L5 5.846L7.154 8L5 10.154L5.846 11L8 8.846L10.154 11L11 10.154L8.846 8L11 5.846L10.154 5Z" fill="#B0B0B0"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </li> 
+                            </ul>
+                        </div>
+                        <p class="cart-block__message disable">
+                            Список товаров пуст
+                        </p>
+                    </div>
+                </div>
+                <aside class="products__aside">
+                    <div class="products__form-block">
+                        <form class="form-product form">
+                            <h1 class="form__title">Добавить товар</h1>
+                            <div class="form__item">
+                                <input class="form__item-input input-product" placeholder="id" id="id">
+                                <label class="form__item-label">id</label>
+                            </div>
+                            <div class="form__item">
+                                <input class="form__item-input input-product input--error" placeholder="title" id="title">
+                                <label class="form__item-label">title</label>
+                            </div>
+                            <div class="form__item">
+                                <input class="form__item-input input-product" placeholder="price" id="price">
+                                <label class="form__item-label">price</label>
+                            </div>
+                            <div class="form__error">
+                                <p class="error-ddkd">efwefwefwefe</p>
+                                <p class="error-gbrg">efwefwefwefe</p>
+                                <p class="error-dgrgrdkd">efwefwefwefe</p>
+                            </div>
+
+                            <div class="form__buttons">
+                                <button class="form-product__add form__btn">Добавить</button>
+                            </div>
+
+                            <!-- <button class="form-product__add form__btn">Добавить</button> -->
+                        </form>
+                    </div>
+                    <div class="products__precheck">
+                        <h1 class="precheck__title">Ваши товары</h1>
+                        <div class="precheck__row">
+                            <p class="precheck__amount">Товары (3) </p>
+                            <p class="precheck__price"> 15 797 ₽ </p>
+                        </div>
+                        <div class="precheck__row">
+                            <p class="">Скидка</p>
+                            <p class="precheck__discount"> - 1 000 ₽ </p>
+                        </div>
+                        <div class="precheck__summary">
+                            <h2 class="precheck__summary-title">Итого:</h2>
+                            <div class="precheck__row">
+                                <p class="">Сумма</p>
+                                <h2 class="precheck__summary-discount"> 13 234 ₽</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="products__discount">
+                        <form class="form-discount form">
+                            <h1 class="form__title">Скидка</h1>
+                            <div class="form__item">
+                                <input class="form__item-input input-discount" placeholder="(0% - 100%)" id="discount">
+                                <label class="form__item-label">(0% - 100%)</label>
+                            </div>
+                            <div class="form__error">
+                                
+                            </div>
+                            <div class="form__buttons">
+                                <button class="form-discount__add form__btn">Добавить</button>
+                                <button class="form-discount__remove form__btn">Удалить скидки</button>
+                            </div>
+                            
+                            
+                        </form>
+                    </div>
+                </aside>
+            </section>
+        </div>
+        
+    </main>
+
+    <script src="./js/main.js"></script>
+</body>
+
+
+
+
+</html>
