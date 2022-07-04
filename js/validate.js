@@ -37,7 +37,6 @@ export const validate = {
         inputs.forEach(input => {
 
             input.addEventListener('click', () => {
-                console.log(input);
                 input.classList.remove('input--error');
                 let errP = document.querySelector('.error-' + input.id);
                 if (errP) { errP.remove(); }
