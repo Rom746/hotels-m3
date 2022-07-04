@@ -1,5 +1,6 @@
 export function Cart() {
     this.updateData();
+    this.updateDiscount();
 }
 
 
@@ -73,29 +74,46 @@ Cart.prototype.getSum = function () {
     return this.data.reduce((prev, cur) => prev + cur.count * cur.price, 0);
 }
 
+Cart.prototype.updateDiscount = function () {
+    this.discount = JSON.parse(localStorage.getItem('cart-discount')) || false;
+}
+
+Cart.prototype.saveDiscount = function (value) {
+    this.discount = value;
+    localStorage.setItem('cart-discount', JSON.stringify(this.discount));
+    return this.discount;
+}
+
 Cart.prototype.getDiscount = function () {
+    return this.discount;
+}
+
+Cart.prototype.setDiscount = function (percent = this.discount) {
+
+    this.updateData();
+    this.data = this.data.map(item => {
+        if (percent == 0) {
+            item.price = item.oldPrice || item.price;
+            item.oldPrice = false;
+            this.saveDiscount(false);
+        } else {
+            if (!item.oldPrice) {
+                item.oldPrice = item.price;
+            }
+            item.price = item.oldPrice - Math.round(item.oldPrice * (percent / 100));
+            this.saveDiscount(percent);
+        }
+        return item;
+    });
+    this.saveData();
+    return this.data;
+}
+
+Cart.prototype.getDiscountSum = function () {
     return this.data.reduce((prev, cur) => {
         if (cur.oldPrice) {
             return prev + cur.count * (cur.oldPrice - cur.price)
         }
         return prev;
     }, 0);
-}
-
-Cart.prototype.setDiscount = function (percent) {
-    this.updateData();
-    this.data = this.data.map(item => {
-        if (percent == 0) {
-            item.price = item.oldPrice || item.price;
-            item.oldPrice = false;
-        } else {
-            if (!item.oldPrice) {
-                item.oldPrice = item.price;
-            }
-            item.price = item.oldPrice - Math.round(item.oldPrice * (percent / 100));
-        }
-        return item;
-    });
-    this.saveData();
-    return this.data;
 }
