@@ -1,10 +1,65 @@
 import { Cart } from './cart.js';
 import { validate } from './validate.js'
 
-const cart = new Cart();
-const cartList = document.querySelector('.cart-items__list');
 
-const createCartItem = (item) => {
+
+function App() {
+    this.cart = new Cart();
+    this.cartList = document.querySelector('.cart-items__list');
+
+    this.checkLocalCart();
+    this.updatePrecheck();
+
+    validate.setEvent(document.querySelectorAll('.form__item-input'));
+    document.querySelector('.form-product__add').addEventListener('click', this.addCartItem.bind(this));
+    document.querySelector('.form-discount__add').addEventListener('click', this.setDiscount.bind(this));
+    document.querySelector('.form-discount__remove').addEventListener('click', this.setDiscount.bind(this));
+    document.querySelectorAll('.cart-item__remove').forEach(btn => btn.addEventListener('click', this.deleteCartItem.bind(this)));
+}
+
+App.prototype.checkLocalCart = function() {
+    const data = this.cart.getData();
+    const discount =this.cart.getDiscount();
+
+    if (discount) {
+        document.querySelector('.input-discount').value = discount;
+    }
+
+    if (data.length > 0) {
+        data.forEach(item => this.createCartItem(item));
+    } else {
+        document.querySelector('.cart-block__message').classList.remove('disable');
+    }
+}
+
+App.prototype.updatePrecheck = function() {
+    const precheck = document.querySelector('.products__precheck');
+    const count =this.cart.getCountAll();
+    const price = this.cart.getSum();
+    const discount = this.cart.getDiscountSum();
+    const priceNotDiscount = price + discount;
+
+    precheck.innerHTML = `
+        <h1 class="precheck__title">Ваши товары</h1>
+        <div class="precheck__row">
+            <p class="precheck__amount">Товары (${count}) </p>
+            <p class="precheck__price"> ${priceNotDiscount} ₽ </p>
+        </div>
+        <div class="precheck__row">
+            <p class="">Скидка</p>
+            <p class="precheck__discount"> - ${discount} ₽ </p>
+        </div>
+        <div class="precheck__summary">
+            <h2 class="precheck__summary-title">Итого:</h2>
+            <div class="precheck__row">
+                <p class="">Сумма</p>
+                <h2 class="precheck__summary-discount"> ${price} ₽</h2>
+            </div>
+        </div>
+    `;
+}
+
+App.prototype.createCartItem = function(item) {
 
     let li = document.querySelector(`[data-item-id="${item.id}"]`);
 
@@ -12,7 +67,7 @@ const createCartItem = (item) => {
         li = document.createElement('li');
         li.className = 'cart-item';
         li.dataset.itemId = item.id;
-        cartList.append(li);
+        this.cartList.append(li);
     }
 
     const oldPrice = item.oldPrice ? item.oldPrice + '₽' : '';
@@ -37,52 +92,10 @@ const createCartItem = (item) => {
             </button>
         </div>
     `;
-    li.querySelector('.cart-item__remove').addEventListener('click', deleteCartItem);
+    li.querySelector('.cart-item__remove').addEventListener('click', this.deleteCartItem.bind(this));
 }
 
-const updatePrecheck = () => {
-    const precheck = document.querySelector('.products__precheck');
-    const count = cart.getCountAll();
-    const price = cart.getSum();
-    const discount = cart.getDiscountSum();
-    const priceNotDiscount = price + discount;
-
-    precheck.innerHTML = `
-        <h1 class="precheck__title">Ваши товары</h1>
-        <div class="precheck__row">
-            <p class="precheck__amount">Товары (${count}) </p>
-            <p class="precheck__price"> ${priceNotDiscount} ₽ </p>
-        </div>
-        <div class="precheck__row">
-            <p class="">Скидка</p>
-            <p class="precheck__discount"> - ${discount} ₽ </p>
-        </div>
-        <div class="precheck__summary">
-            <h2 class="precheck__summary-title">Итого:</h2>
-            <div class="precheck__row">
-                <p class="">Сумма</p>
-                <h2 class="precheck__summary-discount"> ${price} ₽</h2>
-            </div>
-        </div>
-    `;
-}
-
-const checkLocalCart = () => {
-    const data = cart.getData();
-    const discount = cart.getDiscount();
-
-    if (discount) {
-        document.querySelector('.input-discount').value = discount;
-    }
-
-    if (data.length > 0) {
-        data.forEach(item => createCartItem(item));
-    } else {
-        document.querySelector('.cart-block__message').classList.remove('disable');
-    }
-}
-
-const addCartItem = (event) => {
+App.prototype.addCartItem = function (event) {
     event.preventDefault();
     const id = document.querySelector('#input-id');
     const title = document.querySelector('#input-title');
@@ -94,40 +107,32 @@ const addCartItem = (event) => {
         errors.forEach(error => document.querySelector('.error-product').append(error));
         return;
     }
-    
-   
-    cart.add({
+
+
+    this.cart.add({
         "id": id.value,
         "title": title.value,
         "price": price.value,
         "count": 1
     });
 
-    if (cart.getDiscount()) {
-        cart.setDiscount();
+    if (this.cart.getDiscount()) {
+        this.cart.setDiscount();
     }
+    console.log(this);
 
-    createCartItem(cart.getById(id.value));
-    updatePrecheck();
+    this.createCartItem(this.cart.getById(id.value));
+    this.updatePrecheck();
 
     [id, title, price].forEach(input => input.value = '');
     document.querySelector('.cart-block__message').classList.add('disable');
 }
 
-const deleteCartItem = (event) => {
-    event.preventDefault();
-    let id = event.target.dataset.btnId;
-    document.querySelector(`[data-item-id="${id}"]`).remove();
-    if (cart.remove(id).length == 0) {
-        document.querySelector('.cart-block__message').classList.remove('disable');
-    }
-}
-
-const setDiscount = (event) => {
+App.prototype.setDiscount = function (event){
     event.preventDefault();
     const discount = document.querySelector('#input-discount');
     if (event.target.classList.contains('form-discount__remove')) {
-        cart.setDiscount(0);
+        this.cart.setDiscount(0);
         discount.value = '';
     } else {
         let errors = validate.test([[discount, 'num']]);
@@ -137,22 +142,25 @@ const setDiscount = (event) => {
             return;
         }
 
-        cart.setDiscount(Number(discount.value));
+        this.cart.setDiscount(Number(discount.value));
     }
-    updatePrecheck();
-    checkLocalCart();
+    this.updatePrecheck();
+    this.checkLocalCart();
 }
 
 
-checkLocalCart();
-updatePrecheck();
+App.prototype.deleteCartItem =  function (event) {
+    event.preventDefault();
+    let id = event.target.dataset.btnId;
+    document.querySelector(`[data-item-id="${id}"]`).remove();
+    if (this.cart.remove(id).length == 0) {
+        document.querySelector('.cart-block__message').classList.remove('disable');
+        this.updatePrecheck();
+    }
+}
 
-validate.setEvent(document.querySelectorAll('.form__item-input'));
-document.querySelector('.form-product__add').addEventListener('click', addCartItem);
-document.querySelector('.form-discount__add').addEventListener('click', setDiscount);
-document.querySelector('.form-discount__remove').addEventListener('click', setDiscount);
-document.querySelectorAll('.cart-item__remove').forEach(btn => btn.addEventListener('click', deleteCartItem));
+new App();
 
 
-console.log(cart.getDiscount());
+
 

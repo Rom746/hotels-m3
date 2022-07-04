@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="Keywords" content="">
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <title>GitHub</title>
+</head>
+
+<body>
+    
+    <main>
+        <div class="container">
+            <section class="search">
+                <form class="search__form form">
+                    <div class="search__form-row">
+                        <div class="form__item search__form-item">
+                            <input class="form__item-input input-search" placeholder="search" id="input-search">
+                            <label class="form__item-label">search</label>
+                        </div>
+                        <div class="form__buttons">
+                            <button class="form-search__add form__btn">Искать</button>
+                        </div>
+                    </div>
+                    <div class="search__result disable">
+                        <ul class="search__result-list list"> </ul>
+                        <p class="error__mesage"></p>
+                    </div>
+                </form>
+                
+            </section>
+            <section class="result disable">
+                <h1 class="result__title"></h1>
+                <ul class="result__list list">
+                </ul>
+                <p class="error__mesage"></p>
+            </section>
+        </div>
+        
+    </main>
+
+    <script src="./js/main.js" type="module"></script>
+</body>
+
+
+
+
+</html>
