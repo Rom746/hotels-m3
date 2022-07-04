@@ -96,6 +96,10 @@
                 transition-duration: 0.4s;
             }
         }
+
+        & svg {
+            pointer-events: none;
+        }
     }
 }
 

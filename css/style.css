@@ -45,7 +45,6 @@ body {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 15px;
-  border: 1px solid red;
   padding-top: 50px;
 }
 
@@ -184,6 +183,10 @@ h3 {
   fill: #f06a4d;
   -webkit-transition-duration: 0.4s;
           transition-duration: 0.4s;
+}
+
+.cart-item__remove svg {
+  pointer-events: none;
 }
 
 .precheck__row {
