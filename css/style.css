@@ -45,7 +45,7 @@ body {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 15px;
-  padding-top: 50px;
+  padding-top: 20px;
 }
 
 .inner {
@@ -299,6 +299,114 @@ h3 {
   background-color: #e2e6e9;
   -webkit-transition-duration: 0.4s;
           transition-duration: 0.4s;
+}
+
+.search__form {
+  width: 50%;
+  border: 1px solid rgba(28, 28, 28, 0.5);
+  border-radius: 10px;
+}
+
+.search__form-item {
+  margin-bottom: 0;
+  margin-top: 5px;
+  width: 300px;
+}
+
+.search__form-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  padding: 5px 10px;
+}
+
+.search__result {
+  border-top: 1px solid rgba(28, 28, 28, 0.5);
+}
+
+.search__result-item {
+  padding: 5px 20px;
+  border-bottom: 1px solid #e2e6e9;
+  color: #1c1c1c;
+}
+
+.search__result-item:hover {
+  color: #fff;
+  background-color: rgba(28, 28, 28, 0.5);
+  -webkit-transition-duration: 0.4s;
+          transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.search__result-link {
+  color: inherit;
+}
+
+.search__result-language {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.form-search__add {
+  margin-top: -20px;
+}
+
+.error__mesage {
+  padding: 5px 20px;
+  text-align: center;
+}
+
+.result {
+  margin-top: 50px;
+  padding: 50px;
+  border: 1px solid rgba(28, 28, 28, 0.5);
+  border-radius: 10px;
+}
+
+.result__list {
+  padding-top: 10px;
+}
+
+.result__item {
+  padding: 20px;
+}
+
+.result__item:not(:last-child) {
+  border-bottom: 1px solid #e2e6e9;
+}
+
+.result__link {
+  color: #1c1c1c;
+  font-weight: 600;
+  color: #1c80cc;
+}
+
+.result__link:hover {
+  border-bottom: 1px solid #1c1c1c;
+  -webkit-transition-duration: 0.4s;
+          transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.result__description {
+  font-size: 14px;
+  line-height: 16px;
+  padding-top: 5px;
+}
+
+.result__language {
+  font-weight: 600;
+  padding-top: 5px;
+}
+
+.result__topics {
+  padding-top: 5px;
+  color: #f06a4d;
 }
 
 .container-main {
