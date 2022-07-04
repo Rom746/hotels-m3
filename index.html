@@ -1,87 +1,25 @@
 <!DOCTYPE html>
-<html lang="ru">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="Keywords" content="">
-    
+    <title>Модуль 3</title>
     <link rel="stylesheet" href="./css/style.css">
-    <title>Корзина</title>
 </head>
-
 <body>
-    
-    <main>
-        <div class="container">
-            <section class="products">
-                <div class="products__main">
-                    <div class="products__cart-block">
-                        <div class="cart-block__header">
-                            <h1 class="cart-block__title">Товары</h1>
-                        </div>
-                        <div class="cart-block__cart-items">
-                            <ul class="cart-items__list"> </ul>
-                        </div>
-                        <p class="cart-block__message disable">
-                            Список товаров пуст
-                        </p>
-                    </div>
-                </div>
-                <aside class="products__aside">
-                    <div class="products__form-block">
-                        <form class="form-product form">
-                            <h1 class="form__title">Добавить товар</h1>
-                            <div class="form__item">
-                                <input class="form__item-input input-product" placeholder="id" id="input-id">
-                                <label class="form__item-label">id</label>
-                            </div>
-                            <div class="form__item">
-                                <input class="form__item-input input-product " placeholder="title" id="input-title">
-                                <label class="form__item-label">title</label>
-                            </div>
-                            <div class="form__item">
-                                <input class="form__item-input input-product" placeholder="price" id="input-price">
-                                <label class="form__item-label">price</label>
-                            </div>
-                            <div class="form__error error-product"></div>
-
-                            <div class="form__buttons">
-                                <button class="form-product__add form__btn">Добавить</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="products__precheck"> </div>
-                    <div class="products__discount">
-                        <form class="form-discount form">
-                            <h1 class="form__title">Скидка</h1>
-                            <div class="form__item">
-                                <input class="form__item-input input-discount" placeholder="(0% - 100%)" id="input-discount">
-                                <label class="form__item-label">(0% - 100%)</label>
-                            </div>
-                            <div class="form__error error-discount">
-                                
-                            </div>
-                            <div class="form__buttons">
-                                <button class="form-discount__add form__btn">Добавить</button>
-                                <button class="form-discount__remove form__btn">Удалить скидки</button>
-                            </div>
-                            
-                            
-                        </form>
-                    </div>
-                </aside>
-            </section>
+    <div class="container-main">
+        <div class="col">
+            <iframe src="./products/index.html" class="frame" ></iframe>
+            <a href="./products/index.html" class="link">Загатовка для карзины</a>
         </div>
-        
-    </main>
+        <div class="col">
+            <iframe src="./products/index.html" class="frame" ></iframe>
+            <a href="./products/index.html" class="link">Репозитории github</a>
+        </div>
+    </div>
 
-    <script src="./js/main.js" type="module"></script>
+    
+    
 </body>
-
-
-
-
 </html>
