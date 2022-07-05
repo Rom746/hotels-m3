@@ -70,8 +70,6 @@
     border: 1px solid $color--secondary;
     border-radius: 10px;
 
-    &__title {}
-
     &__list {
         padding-top: 10px;
     }
@@ -82,7 +80,6 @@
         &:not(:last-child) {
             border-bottom: 1px solid $color--border;
         }
-
     }
 
     &__link {
@@ -97,7 +94,6 @@
             transition-duration: 0.4s;
             cursor: pointer;
         }
-
     }
 
     &__description {

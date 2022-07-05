@@ -57,10 +57,10 @@ App.prototype.search = function (amount) {
 
 App.prototype.view = function (res, amount) {
 
-
     const tag = (amount < 5) ? '.search__result' : '.result'
     const result = document.querySelector(tag);
     const list = result.querySelector('.list');
+    
     result.classList.remove('disable');
     list.innerHTML = '';
 
@@ -124,14 +124,13 @@ App.prototype.view = function (res, amount) {
 
         }
 
-        
-        
         list.append(li);
     });
 
     if (amount > 5) {
         document.querySelector('.search__result').classList.add('disable');
         document.querySelector('.result__title').textContent = `Найдено ${res.total_count} репозиториев`;
+        this.input.value = '';
     }
 
 
