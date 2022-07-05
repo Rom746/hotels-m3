@@ -42,5 +42,9 @@
     border: 1px solid $color--secondary;
     border-radius: 10px;
    
-
+    &:hover {
+        cursor: pointer;
+        background-color: $color--border;
+        transition-duration: 0.4s;
+    }
 }

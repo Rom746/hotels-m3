@@ -450,3 +450,10 @@ h3 {
   border: 1px solid rgba(28, 28, 28, 0.5);
   border-radius: 10px;
 }
+
+.link-main:hover {
+  cursor: pointer;
+  background-color: #e2e6e9;
+  -webkit-transition-duration: 0.4s;
+          transition-duration: 0.4s;
+}
