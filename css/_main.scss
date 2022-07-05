@@ -23,13 +23,15 @@
     border-radius: 20px;
 }
 
-.link {
+.link-main {
     display: block;
     margin: auto;
     margin-top: -30%;
     max-width: 250px;
     padding: 5px 10px;
-    
+    position: relative;
+    z-index: 100;
+
     color: $color--primary;
 
     font-weight: 600;
