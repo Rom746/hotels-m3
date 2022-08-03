@@ -1,6 +1,6 @@
 # Разработка заготовки под корзину и поиск репозиториев гитхаба
 
-## Демо - [rom746.github.io/hotels-m3/](https://rom746.github.io/hotels-m3/)
+## Демо - [rom746.github.io/m3/](https://rom746.github.io/m3/)
 
 Дизайн - на собственное усмотрение
 
